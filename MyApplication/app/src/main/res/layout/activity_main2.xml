@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#012E26"
+    tools:context=".Main2Activity"
+
+    >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="75dp"
+        android:layout_marginTop="130dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/emailTv"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="15dp"
+        android:background="@android:color/white"
+        android:text="Email"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/emailET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:layout_below="@id/logo"
+        android:layout_toRightOf="@id/emailTv"
+        android:textColorHint="@android:color/white"
+        android:textSize="15dp"
+
+        />
+    <TextView
+        android:id="@+id/passTv"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailTv"
+        android:layout_margin="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@android:color/white"
+        android:text="Password"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/PassET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_below="@id/emailTv"
+        android:layout_toRightOf="@id/passTv"
+        android:textColorHint="@android:color/white"
+        android:textSize="15dp"
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="#5E4CAF50"
+        android:layout_below="@id/PassET"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity"
+    android:background="#ED198B67"
+
+
+    >
+
+    <FrameLayout
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#858BC34A">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/verified" />
+
+
+    </FrameLayout>
+
+
+
+    <TextView
+        android:id="@+id/fname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@id/logo"
+        android:textColor="@android:color/white"
+        android:text="Email"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/fnametv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+
+        android:layout_below="@id/logo"
+        android:textColor="@android:color/white"
+        android:layout_toRightOf="@id/fname"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/lname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_margin="10dp"
+        android:text="Password"
+        android:layout_below="@id/fnametv"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/lnametv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_toRightOf="@id/lname"
+        android:layout_below="@id/fnametv"
+        android:layout_margin="10dp"
+        android:textSize="15sp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:background="@android:color/white"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:layout_below="@id/lnametv"
+
+
+        />
+
+
+
+
+</RelativeLayout>

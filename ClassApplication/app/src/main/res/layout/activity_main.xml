@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTv"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_margin="16dp"
+        android:textColorHint="@color/colorPrimary"
+        app:boxStrokeColor="#015358"
+        app:boxStrokeWidth="2dp"
+
+
+
+        >
+
+        <EditText
+            android:id="@+id/emailEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="5dp"
+            android:drawableTint="#016346"
+            android:hint="Email*"
+            android:inputType="textEmailAddress"
+            android:textColor="#058AC4"
+
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passTv"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailTv"
+        android:layout_margin="16dp"
+        android:textColorHint="@color/colorPrimary"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="5dp"
+            android:drawableTint="#016346"
+            android:hint="Password*"
+            android:inputType="textPassword"
+            android:textColor="#058AC4" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/btnlog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passTv"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="#016346"
+        android:onClick="login"
+        android:text="Login"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/orET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnlog"
+        android:hint="OR"
+        android:textAlignment="center"
+        android:textColorHint="#000000"
+        android:textSize="20sp"
+
+
+        />
+
+    <ImageView
+        android:id="@+id/fb"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/orET"
+        android:layout_margin="10dp"
+        android:layout_toStartOf="@id/google"
+        android:onClick="facebbook"
+        android:src="@drawable/facebook"
+
+
+        />
+
+    <ImageView
+        android:id="@+id/google"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/orET"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+
+        android:onClick="google"
+        android:src="@drawable/google" />
+
+    <ImageView
+        android:id="@+id/tw"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/orET"
+        android:layout_margin="10dp"
+        android:layout_toEndOf="@id/google"
+        android:onClick="twitter"
+        android:src="@drawable/twitter"
+
+        />
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tw"
+        android:hint="dont have Account"
+        android:textAlignment="center"
+        android:textColorHint="#000000"
+        android:textSize="16sp"
+
+        />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="#016346"
+        android:onClick="signup"
+        android:text="signup"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
