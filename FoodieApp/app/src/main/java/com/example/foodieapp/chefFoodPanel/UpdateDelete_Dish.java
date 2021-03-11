@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.foodieapp.ChefBNavigation;
 import com.example.foodieapp.R;
-import com.example.foodieapp.UpdateDishModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

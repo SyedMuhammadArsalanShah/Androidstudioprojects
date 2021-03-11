@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import com.example.foodieapp.R;
-import com.example.foodieapp.UpdateDishModel;
 
+import com.example.foodieapp.chefFoodPanel.UpdateDishModel;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;

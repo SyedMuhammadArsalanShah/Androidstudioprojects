@@ -4,24 +4,10 @@ public class UpdateDishModel {
 
     String Dishes,RandomUID,Description,Quantity,Price,ImageURL,ChefId;
 
-    public UpdateDishModel(){
 
-    }
+    public UpdateDishModel()
+    {
 
-    public String getDishes() {
-        return Dishes;
-    }
-
-    public void setDishes(String dishes) {
-        Dishes = dishes;
-    }
-
-    public String getRandomUID() {
-        return RandomUID;
-    }
-
-    public void setRandomUID(String randomUID) {
-        RandomUID = randomUID;
     }
 
     public String getDescription() {
@@ -40,6 +26,14 @@ public class UpdateDishModel {
         Quantity = quantity;
     }
 
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
+    }
+
     public String getPrice() {
         return Price;
     }
@@ -48,12 +42,24 @@ public class UpdateDishModel {
         Price = price;
     }
 
-    public String getImageURL() {
-        return ImageURL;
+    public String getRandomUID() {
+
+        return RandomUID;
     }
 
-    public void setImageURL(String imageURL) {
-        ImageURL = imageURL;
+    public void setRandomUID(String randomUID) {
+
+        RandomUID = randomUID;
+    }
+
+    public String getDishes()
+    {
+        return Dishes;
+    }
+
+    public void setDishes(String dishes) {
+
+        Dishes = dishes;
     }
 
     public String getChefId() {
@@ -63,5 +69,4 @@ public class UpdateDishModel {
     public void setChefId(String chefId) {
         ChefId = chefId;
     }
-
 }
