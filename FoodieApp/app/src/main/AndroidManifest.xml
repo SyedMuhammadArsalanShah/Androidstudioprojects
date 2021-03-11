@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.foodieapp" >
+    package="com.example.foodieapp">
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".customerFoodPanel.CustomerPaymentOTP"></activity>
+        <activity android:name=".chefFoodPanel.Chefpostdish" />
+        <activity android:name=".Registration" />
+        <activity android:name=".Login" />
+        <activity android:name=".Delforpass" />
+        <activity android:name=".DelBNavigation" />
+        <activity android:name=".CustBNavigation" />
+        <activity android:name=".Custforpass" />
+        <activity android:name=".ChefBNavigation" />
+        <activity android:name=".Chefforpass" />
+        <activity android:name=".Chefreg" />
+        <activity android:name=".DelRegistration" />
+        <activity android:name=".Dellogin" />
+        <activity android:name=".Cheflogin" />
+        <activity android:name=".One" />
+        <activity android:name=".MainMenu" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
