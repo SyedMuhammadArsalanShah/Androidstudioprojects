@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Custlogin extends AppCompatActivity {
+public class DelBNavigation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custlogin);
+        setContentView(R.layout.activity_del_bnavigation);
     }
 }
