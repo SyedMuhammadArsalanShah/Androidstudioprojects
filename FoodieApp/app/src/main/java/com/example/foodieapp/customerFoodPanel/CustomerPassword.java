@@ -57,7 +57,7 @@ public class CustomerPassword extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Customer customer = dataSnapshot.getValue(Customer.class);
-                email = customer.getEmailId();
+                email = customer.getEmailID();
 
 
                 change_pwd.setOnClickListener(new View.OnClickListener() {

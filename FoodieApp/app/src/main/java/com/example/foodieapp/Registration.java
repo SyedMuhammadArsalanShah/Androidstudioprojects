@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,298 +30,375 @@ import java.util.HashMap;
 
 public class Registration extends AppCompatActivity {
 
-    String[] punjab = {"islamabad", "lahore", "mari"};
-    String[] Sindh = {"karachi", "hyderabad", "sukhar"};
-    TextInputLayout Fname,Lname,Email,Pass,cpass,mobileno,localaddress,area,pincode;
-    Spinner Statespin,Cityspin;
-    Button signup, Emaill;
-    CountryCodePicker Cpp;
+    String[] Sindh = {"karachi", "hyderabad", "Sukkur"};
+    String[] Punjab = {"islamabad", "lahore", "mari"};
+    String[] karachi = {"North Karachi ", "North Nazimabad ", "Karachi Central", "Karachi East", "Karachi South", "Karachi West", "Kemari", "Korangi", "Malir"};
+    String[] hyderabad = {"Dadu", "Hyderabad", "Jamshoro", "Matiari", "Tando Allahyar", "Tando Muhammad Khan"};
+    String[] Sukkur = {"Ghotki", "Khairpur", "Sukkur"};
+
+//    String[] Maharashtra = {"Mumbai", "Pune", "Aurangabad"};
+//    String[] Gujarat = {"Ahemdabad", "Rajkot", "Surat"};
+//
+//
+//    String[] Mumbai = {"Churchgate", "Marine Lines", "Charni Road", "Grant Road", "Mumbai Central", "Mahalakshmi", "Lower Parel", "Prabhadevi",
+//            "Dadar", "Matunga", "Mahim", "Bandra", "Khar", "Santacruz", "Vile Parle", "Andheri", "Jogeshwari", "Ram Mandir",
+//            "Goregaon", "Malad", "Kandivai", "Borivali", "Dahisar", "MiraRoad", "Bhayander", "Naigaon", "Vasai Road", "Nalla Sopara", "Virar"};
+//
+//
+//    String[] Pune = {"Hinjewadi", "Wagholi", " Ambegaon", "Undri", "Katraj"};
+//    String[] Aurangabad = {"Aarif Colony", "Baiji Pura", "Balaji Nagar", "Angoori Bagh"};
+//
+//    String[] Ahemdabad={"Mani Nagar","Thaltej","Prahlad Nagar","Gandhinagar"};
+//    String[] Surat={"Agnovad","Akoti","Amroli","Athwalines"};
+//    String[] Rajkot={"Kalawad Road","Astron chowk","Kotecha chowk","Trikon bag"};
+
+    TextInputLayout fname, lname, localadd, emaill, pass, cmpass, Mobileno;
+    Spinner statespin, City, Suburban;
+    Button Signin, Email, Phone;
     FirebaseAuth FAuth;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
-    String fname,lname,emailid,password,confpassword,mobile,Localaddress,Area,Pincode,statee,cityy;
-    String role="Customer";
+    String statee;
+    String cityy;
+    String suburban;
+    String email;
+    String password;
+    String firstname;
+    String lastname;
+    String Localaddress;
+    String confirmpass;
+    String mobileno;
+    String role = "Customer";
+    CountryCodePicker Cpp;
+    ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
-        Fname = (TextInputLayout)findViewById(R.id.Fname);
-        Lname = (TextInputLayout)findViewById(R.id.Lname);
-        Email = (TextInputLayout)findViewById(R.id.Emailid);
-        Pass = (TextInputLayout)findViewById(R.id.Password);
-        cpass = (TextInputLayout)findViewById(R.id.confirmpass);
-        mobileno = (TextInputLayout)findViewById(R.id.Mobilenumber);
-        localaddress = (TextInputLayout)findViewById(R.id.Localaddress);
-        pincode = (TextInputLayout)findViewById(R.id.Pincode);
-        Statespin = (Spinner) findViewById(R.id.Statee);
-        Cityspin = (Spinner) findViewById(R.id.Citys);
-        area = (TextInputLayout)findViewById(R.id.Area);
-
-        signup = (Button)findViewById(R.id.button);
-        Emaill = (Button)findViewById(R.id.email);
-
-
-        Cpp = (CountryCodePicker)findViewById(R.id.CountryCode);
-
-        Statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                Object value = parent.getItemAtPosition(position);
-                statee = value.toString().trim();
-                if(statee.equals("punjab")){
-                    ArrayList<String> list = new ArrayList<>();
-                    for (String cities : punjab){
-                        list.add(cities);
-                    }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
-                    Cityspin.setAdapter(arrayAdapter);
-                }
-                if(statee.equals("Sindh")){
-                    ArrayList<String> list = new ArrayList<>();
-                    for (String cities : Sindh){
-                        list.add(cities);
-                    }
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
-                    Cityspin.setAdapter(arrayAdapter);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object value = parent.getItemAtPosition(position);
-                cityy = value.toString().trim();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        databaseReference = firebaseDatabase.getInstance().getReference("Customer");
-        FAuth = FirebaseAuth.getInstance();
-
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                fname = Fname.getEditText().getText().toString().trim();
-                lname = Lname.getEditText().getText().toString().trim();
-                emailid = Email.getEditText().getText().toString().trim();
-                mobile = mobileno.getEditText().getText().toString().trim();
-                password = Pass.getEditText().getText().toString().trim();
-                confpassword = cpass.getEditText().getText().toString().trim();
-                Area = area.getEditText().getText().toString().trim();
-                Localaddress = localaddress.getEditText().getText().toString().trim();
-                Pincode = pincode.getEditText().getText().toString().trim();
-
-                if (isValid()){
-                    final ProgressDialog mDialog = new ProgressDialog(Registration.this);
-                    mDialog.setCancelable(false);
-                    mDialog.setCanceledOnTouchOutside(false);
-                    mDialog.setMessage("Registration in progress please wait......");
-                    mDialog.show();
-
-                    FAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                            if (task.isSuccessful()){
-                                String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
-                                final HashMap<String , String> hashMap = new HashMap<>();
-                                hashMap.put("Role",role);
-                                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        HashMap<String , String> hashMap1 = new HashMap<>();
-                                        hashMap1.put("Mobile No",mobile);
-                                        hashMap1.put("First Name",fname);
-                                        hashMap1.put("Last Name",lname);
-                                        hashMap1.put("EmailId",emailid);
-                                        hashMap1.put("City",cityy);
-                                        hashMap1.put("Area",Area);
-                                        hashMap1.put("Password",password);
-                                        hashMap1.put("Pincode",Pincode);
-                                        hashMap1.put("State",statee);
-                                        hashMap1.put("Confirm Password",confpassword);
-                                        hashMap1.put("Local Address",Localaddress);
-
-                                        firebaseDatabase.getInstance().getReference("Customer")
-                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                mDialog.dismiss();
-
-                                                FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                                        if(task.isSuccessful()){
-                                                            AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
-                                                            builder.setMessage("You Have Registered! Make Sure To Verify Your Email");
-                                                            builder.setCancelable(false);
-                                                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                                    dialog.dismiss();
+        try {
+            mDialog = new ProgressDialog(Registration.this);
+            mDialog.setMessage("Registering please wait...");
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
+            fname = (TextInputLayout) findViewById(R.id.Fname);
+            lname = (TextInputLayout) findViewById(R.id.Lname);
+            localadd = (TextInputLayout) findViewById(R.id.Localaddress);
+            emaill = (TextInputLayout) findViewById(R.id.Emailid);
+            pass = (TextInputLayout) findViewById(R.id.Password);
+            cmpass = (TextInputLayout) findViewById(R.id.confirmpass);
+            Signin = (Button) findViewById(R.id.button);
+            statespin = (Spinner) findViewById(R.id.Statee);
+            City = (Spinner) findViewById(R.id.Citys);
+            Suburban = (Spinner) findViewById(R.id.Suburban);
+            Mobileno = (TextInputLayout) findViewById(R.id.Mobilenumber);
+            Cpp = (CountryCodePicker) findViewById(R.id.CountryCode);
+            Email = (Button) findViewById(R.id.emaill);
 
 
-                                                                }
-                                                            });
-                                                            AlertDialog Alert = builder.create();
-                                                            Alert.show();
-                                                        }else{
-                                                            mDialog.dismiss();
-                                                            ReusableCodeForAll.ShowAlert(Registration.this,"Error",task.getException().getMessage());
-                                                        }
-                                                    }
-                                                });
 
-                                            }
-                                        });
-
-                                    }
-                                });
-                            }else {
-                                mDialog.dismiss();
-                                ReusableCodeForAll.ShowAlert(Registration.this, "Error", task.getException().getMessage());
-                            }
+            statespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Object value = parent.getItemAtPosition(position);
+                    statee = value.toString().trim();
+                    if (statee.equals("Sindh")) {
+                        ArrayList<String> list = new ArrayList<>();
+                        for (String text : Sindh) {
+                            list.add(text);
                         }
-                    });
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, list);
+
+                        City.setAdapter(arrayAdapter);
+                    }
+                    if (statee.equals("Punjab")) {
+                        ArrayList<String> list = new ArrayList<>();
+                        for (String text : Punjab) {
+                            list.add(text);
+                        }
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, list);
+
+                        City.setAdapter(arrayAdapter);
+                    }
+
                 }
 
-            }
-        });
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-        Emaill.setOnClickListener(new View.OnClickListener() {
+                }
+            });
+
+            City.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Object value = parent.getItemAtPosition(position);
+                    cityy = value.toString().trim();
+                    if (cityy.equals("karachi")) {
+                        ArrayList<String> listt = new ArrayList<>();
+                        for (String text : karachi) {
+                            listt.add(text);
+                        }
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+                        Suburban.setAdapter(arrayAdapter);
+                    }
+
+                    if (cityy.equals("hyderabad")) {
+                        ArrayList<String> listt = new ArrayList<>();
+                        for (String text : hyderabad) {
+                            listt.add(text);
+                        }
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+                        Suburban.setAdapter(arrayAdapter);
+                    }
+
+                    if (cityy.equals("Sukkur")) {
+                        ArrayList<String> listt = new ArrayList<>();
+                        for (String text : Sukkur) {
+                            listt.add(text);
+                        }
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+                        Suburban.setAdapter(arrayAdapter);
+                    }
+
+//                    if (cityy.equals("Ahemdabad")) {
+//                        ArrayList<String> listt = new ArrayList<>();
+//                        for (String text : Ahemdabad) {
+//                            listt.add(text);
+//                        }
+//                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+//                        Suburban.setAdapter(arrayAdapter);
+//                    }
+//                    if (cityy.equals("Surat")) {
+//                        ArrayList<String> listt = new ArrayList<>();
+//                        for (String text : Surat) {
+//                            listt.add(text);
+//                        }
+//                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+//                        Suburban.setAdapter(arrayAdapter);
+//                    }
+//                    if (cityy.equals("Rajkot")) {
+//                        ArrayList<String> listt = new ArrayList<>();
+//                        for (String text : Rajkot) {
+//                            listt.add(text);
+//                        }
+//                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, listt);
+//                        Suburban.setAdapter(arrayAdapter);
+//                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            Suburban.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Object value = parent.getItemAtPosition(position);
+                    suburban = value.toString().trim();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
+            databaseReference = firebaseDatabase.getInstance().getReference("Customer");
+            FAuth = FirebaseAuth.getInstance();
+
+            Signin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    email = emaill.getEditText().getText().toString().trim();
+                    password = pass.getEditText().getText().toString().trim();
+                    firstname = fname.getEditText().getText().toString().trim();
+                    lastname = lname.getEditText().getText().toString().trim();
+                    Localaddress = localadd.getEditText().getText().toString().trim();
+                    confirmpass = cmpass.getEditText().getText().toString().trim();
+                    mobileno = Mobileno.getEditText().getText().toString().trim();
+
+                    if (isValid()) {
+
+                        mDialog.show();
+
+                        FAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    String useridd = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("User").child(useridd);
+                                    final HashMap<String, String> hashMap = new HashMap<>();
+                                    hashMap.put("Role", role);
+                                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            HashMap<String, String> hashMappp = new HashMap<>();
+                                            hashMappp.put("City", cityy);
+                                            hashMappp.put("ConfirmPassword", confirmpass);
+                                            hashMappp.put("EmailID", email);
+                                            hashMappp.put("FirstName", firstname);
+                                            hashMappp.put("LastName", lastname);
+                                            hashMappp.put("Mobileno", mobileno);
+                                            hashMappp.put("Password", password);
+                                            hashMappp.put("LocalAddress", Localaddress);
+                                            hashMappp.put("State", statee);
+                                            hashMappp.put("Suburban", suburban);
+                                            firebaseDatabase.getInstance().getReference("Customer")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                    .setValue(hashMappp).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    FAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                mDialog.dismiss();
+                                                                AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
+                                                                builder.setMessage("Registered Successfully,Please Verify your Email");
+                                                                builder.setCancelable(false);
+                                                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+
+                                                                        dialog.dismiss();
+
+                                                                    }
+                                                                });
+                                                                AlertDialog alert = builder.create();
+                                                                alert.show();
+
+                                                            } else {
+                                                                mDialog.dismiss();
+                                                                ReusableCodeForAll.ShowAlert(Registration.this,"Error",task.getException().getMessage());
+
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                } else {
+                                    mDialog.dismiss();
+                                    ReusableCodeForAll.ShowAlert(Registration.this,"Error",task.getException().getMessage());
+                                }
+                            }
+                        });
+                    }
+
+
+                }
+            });
+        } catch (Exception e) {
+            mDialog.dismiss();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+        Email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Registration.this,Login.class));
+
+                Intent i = new Intent(Registration.this, Login.class);
+                startActivity(i);
                 finish();
             }
         });
 
 
-    }
 
+    }
 
     String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    public boolean isValid(){
-        Email.setErrorEnabled(false);
-        Email.setError("");
-        Fname.setErrorEnabled(false);
-        Fname.setError("");
-        Lname.setErrorEnabled(false);
-        Lname.setError("");
-        Pass.setErrorEnabled(false);
-        Pass.setError("");
-        mobileno.setErrorEnabled(false);
-        mobileno.setError("");
-        cpass.setErrorEnabled(false);
-        cpass.setError("");
-        area.setErrorEnabled(false);
-        area.setError("");
-        localaddress.setErrorEnabled(false);
-        localaddress.setError("");
-        pincode.setErrorEnabled(false);
-        pincode.setError("");
 
-        boolean isValid=false,isValidlocaladd=false,isValidlname=false,isValidname=false,isValidemail=false,isValidpassword=false,isValidconfpassword=false,isValidmobilenum=false,isValidarea=false,isValidpincode=false;
-        if(TextUtils.isEmpty(fname)){
-            Fname.setErrorEnabled(true);
-            Fname.setError("Enter First Name");
-        }else{
-            isValidname = true;
+    public boolean isValid() {
+        emaill.setErrorEnabled(false);
+        emaill.setError("");
+        fname.setErrorEnabled(false);
+        fname.setError("");
+        lname.setErrorEnabled(false);
+        lname.setError("");
+        pass.setErrorEnabled(false);
+        pass.setError("");
+        cmpass.setErrorEnabled(false);
+        cmpass.setError("");
+        Mobileno.setErrorEnabled(false);
+        Mobileno.setError("");
+
+        boolean isValidfirstname = false, isValidlastname = false, isValidaddress = false, isValidemail = false, isvalidpassword = false, isvalidconfirmpassword = false, isvalid = false, isvalidmobileno = false;
+        if (TextUtils.isEmpty(firstname)) {
+            fname.setErrorEnabled(true);
+            fname.setError("FirstName is required");
+        } else {
+            isValidfirstname = true;
         }
-        if(TextUtils.isEmpty(lname)){
-            Lname.setErrorEnabled(true);
-            Lname.setError("Enter Last Name");
-        }else{
-            isValidlname = true;
+        if (TextUtils.isEmpty(lastname)) {
+            lname.setErrorEnabled(true);
+            lname.setError("LastName is required");
+        } else {
+            isValidlastname = true;
         }
-        if(TextUtils.isEmpty(emailid)){
-            Email.setErrorEnabled(true);
-            Email.setError("Email Is Required");
-        }else{
-            if(emailid.matches(emailpattern)){
+        if (TextUtils.isEmpty(email)) {
+            emaill.setErrorEnabled(true);
+            emaill.setError("Email is required");
+        } else {
+            if (email.matches(emailpattern)) {
                 isValidemail = true;
-            }else{
-                Email.setErrorEnabled(true);
-                Email.setError("Enter a Valid Email Id");
+            } else {
+                emaill.setErrorEnabled(true);
+                emaill.setError("Enter a valid Email Address");
             }
-        }
-        if(TextUtils.isEmpty(password)){
-            Pass.setErrorEnabled(true);
-            Pass.setError("Enter Password");
-        }else{
-            if(password.length()<8){
-                Pass.setErrorEnabled(true);
-                Pass.setError("Password is Weak");
-            }else{
-                isValidpassword = true;
-            }
-        }
-        if(TextUtils.isEmpty(confpassword)){
-            cpass.setErrorEnabled(true);
-            cpass.setError("Enter Password Again");
-        }else{
-            if(!password.equals(confpassword)){
-                cpass.setErrorEnabled(true);
-                cpass.setError("Password Dosen't Match");
-            }else{
-                isValidconfpassword = true;
-            }
-        }
-        if(TextUtils.isEmpty(mobile)){
-            mobileno.setErrorEnabled(true);
-            mobileno.setError("Mobile Number Is Required");
-        }else{
-            if(mobile.length()<10){
-                mobileno.setErrorEnabled(true);
-                mobileno.setError("Invalid Mobile Number");
-            }else{
-                isValidmobilenum = true;
-            }
-        }
-        if(TextUtils.isEmpty(Area)){
-            area.setErrorEnabled(true);
-            area.setError("Area Is Required");
-        }else{
-            isValidarea = true;
-        }
-        if(TextUtils.isEmpty(Pincode)){
-            pincode.setErrorEnabled(true);
-            pincode.setError("Please Enter Pincode");
-        }else{
-            isValidpincode = true;
-        }
-        if(TextUtils.isEmpty(Localaddress)){
-            localaddress.setErrorEnabled(true);
-            localaddress.setError("Fields Can't Be Empty");
-        }else{
-            isValidlocaladd = true;
-        }
 
-        isValid = (isValidarea && isValidconfpassword && isValidpassword && isValidpincode && isValidemail && isValidmobilenum && isValidname && isValidlocaladd && isValidlname) ? true : false;
-        return isValid;
-
-
+        }
+        if (TextUtils.isEmpty(mobileno)) {
+            Mobileno.setErrorEnabled(true);
+            Mobileno.setError("Mobile number is required");
+        } else {
+            if (mobileno.length() < 10) {
+                Mobileno.setErrorEnabled(true);
+                Mobileno.setError("Invalid mobile number");
+            } else {
+                isvalidmobileno = true;
+            }
+        }
+        if (TextUtils.isEmpty(password)) {
+            pass.setErrorEnabled(true);
+            pass.setError("Password is required");
+        } else {
+            if (password.length() < 6) {
+                pass.setErrorEnabled(true);
+                pass.setError("Password too weak");
+                cmpass.setError("password too weak");
+            } else {
+                isvalidpassword = true;
+            }
+        }
+        if (TextUtils.isEmpty(confirmpass)) {
+            cmpass.setErrorEnabled(true);
+            cmpass.setError("Confirm Password is required");
+        } else {
+            if (!password.equals(confirmpass)) {
+                pass.setErrorEnabled(true);
+                pass.setError("Password doesn't match");
+                cmpass.setError("Password doesn't match");
+            } else {
+                isvalidconfirmpassword = true;
+            }
+        }
+        if (TextUtils.isEmpty(Localaddress)) {
+            localadd.setErrorEnabled(true);
+            localadd.setError("Local Address is required");
+        } else {
+            isValidaddress = true;
+        }
+        isvalid = (isValidfirstname && isValidlastname && isValidemail && isvalidconfirmpassword && isvalidpassword && isvalidmobileno && isValidaddress) ? true : false;
+        return isvalid;
     }
-
 }

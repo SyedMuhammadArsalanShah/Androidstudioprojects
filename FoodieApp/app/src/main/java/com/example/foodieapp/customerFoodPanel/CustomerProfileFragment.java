@@ -44,26 +44,27 @@ import java.util.HashMap;
 public class CustomerProfileFragment extends Fragment {
 
 
-    String[] Maharashtra = {"Mumbai", "Pune", "Aurangabad"};
-    String[] Gujarat = {"Ahemdabad", "Rajkot", "Surat"};
-
-
-    String[] Mumbai = {"Churchgate", "Marine Lines", "Charni Road", "Grant Road", "Mumbai Central", "Mahalakshmi", "Lower Parel", "Prabhadevi",
-            "Dadar", "Matunga", "Mahim", "Bandra", "Khar", "Santacruz", "Vile Parle", "Andheri", "Jogeshwari", "Ram Mandir",
-            "Goregaon", "Malad", "Kandivai", "Borivali", "Dahisar", "MiraRoad", "Bhayander", "Naigaon", "Vasai Road", "Nalla Sopara", "Virar"};
-
-
-    String[] Pune = {"Hinjewadi", "Wagholi", " Ambegaon", "Undri", "Katraj"};
-    String[] Aurangabad = {"Aarif Colony", "Baiji Pura", "Balaji Nagar", "Angoori Bagh"};
-    String[] Ahemdabad = {"Mani Nagar", "Thaltej", "Prahlad Nagar", "Gandhinagar"};
-    String[] Surat = {"Agnovad", "Akoti", "Amroli", "Athwalines"};
-    String[] Rajkot = {"Kalawad Road", "Astron chowk", "Kotecha chowk", "Trikon bag"};
+    String[] Sindh = {"karachi", "hyderabad","Sukkur"};
+    String[] Punjab = {"islamabad", "lahore", "mari"};
+    String[] karachi = {"North Karachi ", "North Nazimabad ","Karachi Central","Karachi East","Karachi South","Karachi West","Kemari","Korangi","Malir"};
+    String[] hyderabad = {"Dadu","Hyderabad","Jamshoro","Matiari","Tando Allahyar","Tando Muhammad Khan"};
+    String[] Sukkur = {"Ghotki", "Khairpur", "Sukkur"};
+//    String[] Maharashtra = {"Mumbai", "Pune", "Aurangabad"};
+//    String[] Gujarat = {"Ahemdabad", "Rajkot", "Surat"};
+//    String[] Mumbai = {"Churchgate", "Marine Lines", "Charni Road", "Grant Road", "Mumbai Central", "Mahalakshmi", "Lower Parel", "Prabhadevi",
+//            "Dadar", "Matunga", "Mahim", "Bandra", "Khar", "Santacruz", "Vile Parle", "Andheri", "Jogeshwari", "Ram Mandir",
+//            "Goregaon", "Malad", "Kandivai", "Borivali", "Dahisar", "MiraRoad", "Bhayander", "Naigaon", "Vasai Road", "Nalla Sopara", "Virar"};
+//    String[] Pune = {"Hinjewadi", "Wagholi", " Ambegaon", "Undri", "Katraj"};
+//    String[] Aurangabad = {"Aarif Colony", "Baiji Pura", "Balaji Nagar", "Angoori Bagh"};
+//    String[] Ahemdabad = {"Mani Nagar", "Thaltej", "Prahlad Nagar", "Gandhinagar"};
+//    String[] Surat = {"Agnovad", "Akoti", "Amroli", "Athwalines"};
+//    String[] Rajkot = {"Kalawad Road", "Astron chowk", "Kotecha chowk", "Trikon bag"};
 
     EditText firstname, lastname, address;
     Spinner State, City, Suburban;
-    TextView mobileno, Email;
+    TextView mobileno, Email,password;
     Button Update;
-    LinearLayout password, LogOut;
+    LinearLayout LogOut;
     DatabaseReference databaseReference, data;
     FirebaseDatabase firebaseDatabase;
     String statee, cityy, suburban, email, passwordd, confirmpass;
@@ -84,7 +85,7 @@ public class CustomerProfileFragment extends Fragment {
         Suburban = (Spinner) v.findViewById(R.id.sub);
         mobileno = (TextView) v.findViewById(R.id.mobilenumber);
         Update = (Button) v.findViewById(R.id.update);
-        password = (LinearLayout) v.findViewById(R.id.passwordlayout);
+        password = (TextView) v.findViewById(R.id.Passwordd);
         LogOut = (LinearLayout) v.findViewById(R.id.logout_layout);
 
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -97,25 +98,25 @@ public class CustomerProfileFragment extends Fragment {
                 firstname.setText(customer.getFirstName());
                 lastname.setText(customer.getLastName());
                 address.setText(customer.getLocalAddress());
-                mobileno.setText(customer.getMobileNo());
-                Email.setText(customer.getEmailId());
+                mobileno.setText(customer.getMobileno());
+                Email.setText(customer.getEmailID());
                 State.setSelection(getIndexByString(State, customer.getState()));
                 State.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Object value = parent.getItemAtPosition(position);
                         statee = value.toString().trim();
-                        if (statee.equals("Maharashtra")) {
+                        if (statee.equals("Sindh")) {
                             ArrayList<String> list = new ArrayList<>();
-                            for (String text : Maharashtra) {
+                            for (String text : Sindh) {
                                 list.add(text);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
                             City.setAdapter(arrayAdapter);
                         }
-                        if (statee.equals("Gujarat")) {
+                        if (statee.equals("Punjab")) {
                             ArrayList<String> list = new ArrayList<>();
-                            for (String text : Gujarat) {
+                            for (String text : Punjab) {
                                 list.add(text);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, list);
@@ -136,57 +137,34 @@ public class CustomerProfileFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Object value = parent.getItemAtPosition(position);
                         cityy = value.toString().trim();
-                        if (cityy.equals("Mumbai")) {
+                        if (cityy.equals("karachi")) {
                             ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Mumbai) {
+                            for (String text : karachi) {
                                 listt.add(text);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
                             Suburban.setAdapter(arrayAdapter);
                         }
 
-                        if (cityy.equals("Pune")) {
+                        if (cityy.equals("hyderabad")) {
                             ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Pune) {
+                            for (String text : hyderabad) {
                                 listt.add(text);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
                             Suburban.setAdapter(arrayAdapter);
                         }
 
-                        if (cityy.equals("Aurangabad")) {
+                        if (cityy.equals("Sukkur")) {
                             ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Aurangabad) {
+                            for (String text : Sukkur) {
                                 listt.add(text);
                             }
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
                             Suburban.setAdapter(arrayAdapter);
                         }
-                        if (cityy.equals("Ahemdabad")) {
-                            ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Ahemdabad) {
-                                listt.add(text);
-                            }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
-                            Suburban.setAdapter(arrayAdapter);
-                        }
-                        if (cityy.equals("Surat")) {
-                            ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Surat) {
-                                listt.add(text);
-                            }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
-                            Suburban.setAdapter(arrayAdapter);
-                        }
-                        if (cityy.equals("Rajkot")) {
-                            ArrayList<String> listt = new ArrayList<>();
-                            for (String text : Rajkot) {
-                                listt.add(text);
-                            }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listt);
-                            Suburban.setAdapter(arrayAdapter);
-                        }
-                     //   Suburban.setSelection(getIndexByString(Suburban, customer.getSuburban()));
+
+                        Suburban.setSelection(getIndexByString(Suburban, customer.getSuburban()));
                     }
 
                     @Override
@@ -194,19 +172,19 @@ public class CustomerProfileFragment extends Fragment {
 
                     }
                 });
-//
-//                Suburban.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        Object value = parent.getItemAtPosition(position);
-//                        suburban = value.toString().trim();
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> parent) {
-//
-//                    }
-//                });
+
+                Suburban.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Object value = parent.getItemAtPosition(position);
+                        suburban = value.toString().trim();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
 
             @Override
@@ -235,9 +213,9 @@ public class CustomerProfileFragment extends Fragment {
 
 
                         confirmpass = customer.getConfirmPassword();
-                        email = customer.getEmailId();
+                        email = customer.getEmailID();
                         passwordd = customer.getPassword();
-                        long mobilenoo = Long.parseLong(customer.getMobileNo());
+                        long mobilenoo = Long.parseLong(customer.getMobileno());
 
                         String Fname = firstname.getText().toString().trim();
                         String Lname = lastname.getText().toString().trim();

@@ -1,5 +1,6 @@
 package com.example.foodieapp.customerFoodPanel;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
                         Customer cust = dataSnapshot.getValue(Customer.class);
                         State = cust.getState();
                         City = cust.getCity();
-                 //       Sub = cust.getSuburban();
+                        Sub = cust.getSuburban();
                         customermenu();
                     }
 
