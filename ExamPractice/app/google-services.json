@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1019266103026",
+    "firebase_url": "https://pree-3eba2-default-rtdb.firebaseio.com",
+    "project_id": "pree-3eba2",
+    "storage_bucket": "pree-3eba2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019266103026:android:82b37c22842c41ca89c26b",
+        "android_client_info": {
+          "package_name": "com.example.exampractice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019266103026-ic17omelci25is70i116vtq91jjesbb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJS6A3-epWR19V4b3KtIN0oAsOaav5Bqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019266103026-ic17omelci25is70i116vtq91jjesbb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
